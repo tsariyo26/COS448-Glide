@@ -1,1 +1,181 @@
-...
+/* General Reset or Minimal Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* BODY */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  /* HEADER */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #dddddd;
+    padding: 1rem 2rem;
+  }
+  
+  .logo-area {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 1rem;
+  }
+  
+  .app-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    /* The oval shape seen on your wireframe can be approximated with border-radius */
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+  }
+  
+  .language-switch {
+    display: flex;
+    align-items: center;
+  }
+  
+  .language-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* SEARCH & FILTER SECTION */
+  .search-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+  }
+  
+  .search-bar {
+    display: flex;
+    max-width: 400px;
+  }
+  
+  #searchInput {
+    flex: 1;
+    padding: 0.5rem;
+    border: 2px solid #ccc;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .search-btn {
+    background-color: #4CAF50;
+    border: 2px solid #4CAF50;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+  
+  .search-btn img {
+    height: 20px;
+    width: 20px;
+  }
+  
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .filter-container h3 {
+    margin-right: 1rem;
+  }
+  
+  .filter-container label {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  
+  .filter-checkbox {
+    margin-right: 0.3rem;
+  }
+  
+  /* MAP SECTION */
+  .map-section {
+    position: relative;
+    padding: 1rem 2rem;
+  }
+  
+  .airport-map {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #ccc;
+  }
+  
+  /* DIRECTIONS POPUP */
+  .directions-popup {
+    position: absolute;
+    top: 20px;  /* Adjust to place over the map */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+    max-width: 80%;
+    padding: 1rem;
+    display: none; /* Hidden by default */
+    z-index: 999;
+  }
+  
+  .close-popup {
+    float: right;
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .directions-info {
+    margin-top: 1rem;
+  }
+  
+  .order-btn,
+  .walk-btn {
+    margin-right: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  .fastest-route {
+    margin-top: 1rem;
+    background-color: #f1f1f1;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  /* FOOTER */
+  .footer {
+    background-color: #dddddd;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-weight: bold;
+  }
+  
