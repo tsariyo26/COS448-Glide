@@ -1,1 +1,107 @@
-...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Glide</title>
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- HEADER / NAV -->
+  <header class="header">
+    <div class="logo-area">
+      <img src="logo.png" alt="Glide Logo" class="logo" />
+      <h1 class="app-name">Glide</h1>
+    </div>
+    <div class="language-switch">
+      <!-- For demonstration, this is just an icon placeholder -->
+      <button class="language-btn" aria-label="Switch Language">
+        <img src="globe-icon.png" alt="Language icon" />
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Search Bar and Filters -->
+    <section class="search-section">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="At JFK"
+          aria-label="Search for location or amenity"
+        />
+        <button id="searchBtn" class="search-btn" aria-label="Search Button">
+          <img src="location-icon.png" alt="Location icon" />
+        </button>
+      </div>
+      <div class="filter-container">
+        <h3>Filter by</h3>
+        <label>
+          <input type="checkbox" class="filter-checkbox" id="shops" checked />
+          Shops
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" id="restaurants" checked />
+          Restaurants
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" id="lounges" checked />
+          Lounges
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" id="airlinesDesks" checked />
+          Airlines Desks
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" id="terminal" checked />
+          Terminal
+        </label>
+      </div>
+    </section>
+
+    <!-- MAP SECTION -->
+    <section class="map-section">
+      <!-- Placeholder for the actual map (Google/Mapbox/OpenStreetMap) -->
+      <img
+        src="airport_map_placeholder.jpg"
+        alt="Airport Map"
+        class="airport-map"
+        id="airportMap"
+      />
+
+      <!-- Directions Popup / Overlay (hidden by default) -->
+      <div class="directions-popup" id="directionsPopup">
+        <button class="close-popup" id="closePopupBtn">X</button>
+        <h2 id="popupTitle">Shake Shack</h2>
+        <div class="directions-info">
+          <p><strong>Get Directions</strong></p>
+          <p><strong>From:</strong> <span id="directionsFrom">Current Location</span></p>
+          <p><strong>To:</strong> <span id="directionsTo">Shake Shack, NJ 08000</span></p>
+          <button class="order-btn">Order</button>
+          <button class="walk-btn">Walk</button>
+          <!-- You can add more travel mode buttons if needed -->
+        </div>
+        <div class="fastest-route">
+          <h3>Fastest Route</h3>
+          <p id="fastestRoute">
+            To 375 East Ave.<br />
+            4.1 mi via Washington Blvd<br />
+            Arrival time: 9:30 AM
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Footer
+  </footer>
+
+  <!-- Link to external JS -->
+  <script src="script.js"></script>
+</body>
+</html>
+
