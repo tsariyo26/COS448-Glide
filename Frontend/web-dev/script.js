@@ -1,47 +1,61 @@
 // script.js
 
-// Grab elements
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const directionsPopup = document.getElementById('directionsPopup');
-const closePopupBtn = document.getElementById('closePopupBtn');
+const baseURL = "http://localhost:5000/api"; // Update if deployed!
 
-/**
- * Simple search function:
- * If user types "Shake Shack", show the directions popup.
- * (In a real app, you'd perform an API call or a local map update.)
- */
-searchBtn.addEventListener('click', () => {
-  const query = searchInput.value.trim().toLowerCase();
-
-  // Check if user typed "shake shack" or partial
-  if (query.includes('shake shack')) {
-    // Show the directions popup
-    directionsPopup.style.display = 'block';
-  } else {
-    // Hide directions popup if open, or handle other searches
-    directionsPopup.style.display = 'none';
-    alert(`Searching for: ${searchInput.value}`);
-  }
-});
-
-// Close popup on X button
-closePopupBtn.addEventListener('click', () => {
-  directionsPopup.style.display = 'none';
-});
-
-/**
- * Filter checkboxes (placeholder logic):
- * You could listen for change events on each checkbox
- * and update your map markers accordingly.
- */
-const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
-filterCheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener('change', (e) => {
-    const amenityType = e.target.id; // e.g. 'shops', 'restaurants', etc.
-    const isChecked = e.target.checked;
-    console.log(`Filter for ${amenityType} is now ${isChecked ? 'ON' : 'OFF'}`);
-    // In practice: Show/Hide those amenity markers on the map
+window.addEventListener("DOMContentLoaded", () => {
+  fetchWaitTimes();
+  document.getElementById("searchBtn").addEventListener("click", handleSearch);
+  document.getElementById("closePopupBtn").addEventListener("click", () => {
+    document.getElementById("directionsPopup").style.display = "none";
   });
 });
+
+// Get mock TSA wait times
+function fetchWaitTimes() {
+  fetch(`${baseURL}/wait-times`)
+    .then(res => res.json())
+    .then(data => {
+      console.log("Security Wait Times:", data);
+      // You can add UI rendering here (e.g., show wait time for JFK)
+    })
+    .catch(err => console.error("Error fetching wait times:", err));
+}
+
+// Handle amenity search
+function handleSearch() {
+  const airportCode = "JFK"; // Change to dynamic input if needed
+  fetch(`${baseURL}/amenities/${airportCode}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log("Amenities:", data);
+      // You could dynamically overlay markers on the map here
+    })
+    .catch(err => console.error("Error fetching amenities:", err));
+}
+
+// Optional: Get directions between 2 points
+function fetchRoute(start, end) {
+  fetch(`${baseURL}/routes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ start, end }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Shortest Route:", data);
+      // Example: update the directions popup
+      document.getElementById("directionsTo").textContent = end;
+      document.getElementById("fastestRoute").innerHTML = `
+        Path: ${data.path.join(" → ")}<br/>
+        Distance: ${data.distance}
+      `;
+      document.getElementById("directionsPopup").style.display = "block";
+    })
+    .catch(err => console.error("Error fetching route:", err));
+}
+
+// Example: you can manually trigger route fetch for demo
+// fetchRoute("A", "D");
 
