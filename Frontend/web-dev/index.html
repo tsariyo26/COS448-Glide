@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Glide</title>
   <!-- Link to external CSS -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- In your <head> section -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
 </head>
+
 <body>
   <!-- HEADER / NAV -->
   <header class="header">
     <div class="logo-area">
-      <img src="logo.png" alt="Glide Logo" class="logo"/>
+      <img src="logo.png" alt="Glide Logo" class="logo" />
       <h1 class="app-name">Glide</h1>
     </div>
     <div class="language-switch">
@@ -19,6 +25,9 @@
         <img src="language-icon.png" alt="Language icon" width="75" height="75" />
       </button>
     </div>
+
+
+   
   </header>
 
   <!-- MAIN CONTENT -->
@@ -26,12 +35,7 @@
     <!-- Search Bar and Filters -->
     <section class="search-section">
       <div class="search-bar">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="At JFK"
-          aria-label="Search for location or amenity"
-        />
+        <input type="text" id="searchInput" placeholder="At JFK" aria-label="Search for location or amenity" />
         <button id="searchBtn" class="search-btn" aria-label="Search Button">
           <img src="location-icon.png" alt="Location icon" />
         </button>
@@ -59,17 +63,16 @@
           Terminal
         </label>
       </div>
+      
     </section>
 
     <!-- MAP SECTION -->
     <section class="map-section">
       <!-- Placeholder for the actual map (Google/Mapbox/OpenStreetMap) -->
-      <img
-        src="map.png"
-        alt="Airport Map"
-        class="airport-map"
-        id="airportMap"
-      />
+      <!-- <img src="map.png" alt="Airport Map" class="airport-map" id="airportMap" /> -->
+
+      <!-- Mapbox map will render here -->
+      <div id="map" style="width: 100%; height: 500px;"></div>
 
       <!-- Directions Popup / Overlay (hidden by default) -->
       <div class="directions-popup" id="directionsPopup">
@@ -103,5 +106,5 @@
   <!-- Link to external JS -->
   <script src="script.js"></script>
 </body>
-</html>
 
+</html>

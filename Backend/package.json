@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node routes/server.js",
-    "dev": "nodemon routes/server.js"
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "Glide",
