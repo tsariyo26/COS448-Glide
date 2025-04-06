@@ -1,55 +1,89 @@
-// script.js
-
 // ========================
 // 🧭 Mapbox Setup
 // ========================
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2xpZGUyMDI1IiwiYSI6ImNtOTNuNjR4djA0b3cyam9nN3M4MW1jZnYifQ.FrUimsF4NgG6zbz2NJaFQw'; // Replace this with your token
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2xpZGUyMDI1IiwiYSI6ImNtOTNuNjR4djA0b3cyam9nN3M4MW1jZnYifQ.FrUimsF4NgG6zbz2NJaFQw';
 
 const map = new mapboxgl.Map({
-  container: 'map', // This should match the id in your index.html
-  style: 'mapbox://styles/mapbox/streets-v11', // You can replace with a custom style later
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
   center: [-73.7781, 40.6413], // JFK Airport
   zoom: 14
 });
 
-// Add geolocation control to find user's current location
-map.addControl(
-  new mapboxgl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true,
-    showUserHeading: true
-  })
-);
-
 // ========================
-// 🔧 Backend Integration
+// 📍 Geolocation & Save to Backend
 // ========================
 const baseURL = "http://localhost:5050/api"; // Update if deployed!
 
+const geolocate = new mapboxgl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true,
+  showUserHeading: true
+});
+
+map.addControl(geolocate);
+
+const jFK = new mapboxgl.Marker()
+    .setLngLat([-73.7765, 40.6452]) // example coords
+    .setPopup(new mapboxgl.Popup().setText("Shake Shack"))
+    .addTo(map);
+
+shakeShack.getElement().addEventListener('click', () => {
+    directions.setOrigin([-73.7781, 40.6413]); // Set to User Distance (store in db)
+    directions.setDestination([-73.7765, 40.6452]); // End: Shake Shack
+});
+
+geolocate.on('geolocate', function (e) {
+  const lng = e.coords.longitude;
+  const lat = e.coords.latitude;
+  console.log('User location:', lat, lng);
+
+  // Save to backend
+  fetch(`${baseURL}/user-location`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      latitude: lat,
+      longitude: lng,
+      timestamp: new Date().toISOString()
+    })
+  })
+    .then(res => res.json())
+    .then(data => console.log("Location saved:", data))
+    .catch(err => console.error("Error saving location:", err));
+});
+
+// ========================
+// 🌐 DOM Ready
+// ========================
 window.addEventListener("DOMContentLoaded", () => {
   fetchWaitTimes();
-  fetchAmenities("JFK"); // Load amenities on start
+  fetchAmenities("JFK");
   document.getElementById("searchBtn").addEventListener("click", handleSearch);
   document.getElementById("closePopupBtn").addEventListener("click", () => {
     document.getElementById("directionsPopup").style.display = "none";
   });
 });
 
-// Get mock TSA wait times
+// ========================
+// ⏱ Mock TSA Wait Times
+// ========================
 function fetchWaitTimes() {
   fetch(`${baseURL}/wait-times`)
     .then(res => res.json())
     .then(data => {
       console.log("Security Wait Times:", data);
-      // You can display this info in the UI if needed
+      // TODO: Display this in the UI if needed
     })
     .catch(err => console.error("Error fetching wait times:", err));
 }
 
 // ========================
-// 📍 Amenities on the Map
+// 🗺 Fetch Amenities
 // ========================
 function fetchAmenities(airportCode) {
   fetch(`${baseURL}/amenities/${airportCode}`)
@@ -67,8 +101,7 @@ function fetchAmenities(airportCode) {
 }
 
 function handleSearch() {
-  // This could be extended to use search input
-  fetchAmenities("JFK");
+  fetchAmenities("JFK"); // Extend this to use search input if needed
 }
 
 // ========================
@@ -85,8 +118,7 @@ function fetchRoute(start, end) {
     .then(res => res.json())
     .then(data => {
       console.log("Shortest Route:", data);
-      
-      // Update popup
+
       document.getElementById("directionsTo").textContent = end;
       document.getElementById("fastestRoute").innerHTML = `
         Path: ${data.path.join(" → ")}<br/>
@@ -94,13 +126,13 @@ function fetchRoute(start, end) {
       `;
       document.getElementById("directionsPopup").style.display = "block";
 
-      // OPTIONAL: Draw the route path on the map
+      // Draw route on map
       if (map.getSource('route')) {
         map.removeLayer('route');
         map.removeSource('route');
       }
 
-      const coordinates = data.coordinates; // Array of [lng, lat] from backend
+      const coordinates = data.coordinates;
       if (coordinates && coordinates.length > 0) {
         map.addSource('route', {
           type: 'geojson',
@@ -131,7 +163,10 @@ function fetchRoute(start, end) {
     .catch(err => console.error("Error fetching route:", err));
 }
 
-// Example manual route fetch for demo/testing:
+// ========================
+// 🧪 Test Routes (Optional)
+// ========================
 // fetchRoute("Gate A1", "Gate D4");
+
 
 
